@@ -28,7 +28,14 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'status' => 'required'
+        ]);
+        
+        Task::create($request->all());
+        
+        return redirect()->route('task.index');
     }
 
     /**
@@ -52,7 +59,14 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'status' => 'required'
+        ]);
+        
+        $task->update($request->all());
+        
+        return redirect()->route('task.index');
     }
 
     /**
@@ -60,6 +74,7 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return redirect()->route('task.index');
     }
 }
