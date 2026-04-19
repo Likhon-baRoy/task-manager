@@ -7,25 +7,20 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Show all tasks
     public function index()
     {
-        //
+        $tasks = Task::latest()->get();
+        return view('tasks.index', compact('tasks'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Show create form
     public function create()
     {
-        //
+        return view('tasks.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Store task
     public function store(Request $request)
     {
         $request->validate([
@@ -35,7 +30,8 @@ class TaskController extends Controller
         
         Task::create($request->all());
         
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.index')
+            ->with('success', 'Task created successfully!');
     }
 
     /**
@@ -46,17 +42,13 @@ class TaskController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Show edit form
     public function edit(Task $task)
     {
-        //
+        return view('tasks.edit', compact('task'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // Update task
     public function update(Request $request, Task $task)
     {
         $request->validate([
@@ -66,15 +58,15 @@ class TaskController extends Controller
         
         $task->update($request->all());
         
-        return redirect()->route('task.index');
+        return redirect()->route('tasks.index')
+            ->with('success', 'Task updated!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Delete task
     public function destroy(Task $task)
     {
         $task->delete();
-        return redirect()->route('task.index');
+        return redirect()->route('tasks.index')
+            ->with('success', 'Task deleted!');
     }
 }
