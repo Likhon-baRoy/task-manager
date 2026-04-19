@@ -35,7 +35,7 @@ class TaskController extends Controller
         
         Task::create($request->all());
         
-        return redirect()->route('task.index');
+        return redirect()->route('tasks.index');
     }
 
     /**
