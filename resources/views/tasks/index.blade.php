@@ -148,14 +148,12 @@
                                 </form>
                             </td>
                             <td>
-                                <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-info">Edit</a>
-
+                                <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-outline-primary me-1">Edit</a>
                                 <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button onclick="return confirm('Delete this task?')" class="btn btn-sm btn-danger">
-                                        Delete
-                                    </button>
+                                    <button type="submit" onclick="return confirm('Delete this task?')"
+                                        class="btn btn-sm btn-outline-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>
