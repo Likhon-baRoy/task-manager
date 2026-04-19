@@ -8,6 +8,43 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
     <style>
+        :root {
+            --pending: #6c757d;
+            --progress: #ffc107;
+            --completed: #198754;
+        }
+
+        .status-select {
+            border-radius: 20px;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            padding: 6px 12px;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .status-pending {
+            background-color: var(--pending);
+            color: white;
+        }
+
+        .status-in_progress {
+            background-color: var(--progress);
+            color: black;
+        }
+
+        .status-completed {
+            background-color: var(--completed);
+            color: white;
+        }
+
+        .status-select:hover {
+            opacity: 0.95;
+            transform: scale(1.02);
+        }
+
         .description-text {
             max-width: 300px;
             white-space: nowrap;
