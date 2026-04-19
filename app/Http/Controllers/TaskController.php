@@ -12,7 +12,9 @@ class TaskController extends Controller
     {
         $tasks = Task::when(request('status'), function ($q) {
             $q->where('status', request('status'));
-        })->latest()->get();
+        })
+        ->orderBy('updated_at', 'desc')
+        ->get();
 
         return view('tasks.index', compact('tasks'));
     }
@@ -26,15 +28,16 @@ class TaskController extends Controller
     // Store task
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|max:255',
-            'status' => 'required'
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|in:pending,in_progress,completed',
         ]);
-        
-        Task::create($request->all());
-        
+
+        Task::create($validated);
+
         return redirect()->route('tasks.index')
-            ->with('success', 'Task created successfully!');
+                        ->with('success', 'Task created successfully!');
     }
 
     /**
@@ -54,12 +57,13 @@ class TaskController extends Controller
     // Update task
     public function update(Request $request, Task $task)
     {
-        $request->validate([
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'status' => 'required|in:pending,in_progress,completed',
         ]);
 
-        $task->status = $request->status;
-        $task->save();
+        $task->update($validated);
 
         return redirect('/tasks')->with('success', 'Task updated!');
     }
