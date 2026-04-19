@@ -11,10 +11,13 @@
     <div class="container mt-5">
         <h2 class="mb-4">Task List</h2>
 
-        <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">+ Add Task</a>
+        <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">+ Add New Task</a>
 
         @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success alert-dismissible fade show">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
         @endif
 
         <div class="card">
