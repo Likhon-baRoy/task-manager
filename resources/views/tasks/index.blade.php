@@ -41,14 +41,14 @@
                         <tr>
                             <th>Title</th>
                             <th>Description</th>
-                            <th>Status</th>
-                            <th width="200">Action</th>
+                            <th width="160">Status</th>
+                            <th width="180">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($tasks as $task)
                         <tr>
-                            <td>{{ $task->title }}</td>
+                            <td><strong>{{ $task->title }}</strong></td>
                             <td>
                                 @if(strlen($task->description ?? '') > 25)
                                 <span class="description-text">
@@ -66,13 +66,17 @@
                                 @endif
                             </td>
                             <td>
-                                @if($task->status == 'pending')
-                                <span class="badge bg-secondary">Pending</span>
-                                @elseif($task->status == 'in_progress')
-                                <span class="badge bg-warning">In Progress</span>
-                                @else
-                                <span class="badge bg-success">Completed</span>
-                                @endif
+                                <form action="{{ route('tasks.update', $task->id) }}" method="POST" class="status-form">
+                                    @csrf
+                                    @method('PUT')
+                                    <select name="status"
+                                        class="form-select form-select-sm status-select status-{{ $task->status }}"
+                                        onchange="this.form.submit()">
+                                        <option value="pending" {{ $task->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                        <option value="in_progress" {{ $task->status == 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                                        <option value="completed" {{ $task->status == 'completed' ? 'selected' : '' }}>Completed</option>
+                                    </select>
+                                </form>
                             </td>
                             <td>
                                 <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-info">Edit</a>
@@ -144,6 +148,13 @@
 
             $('#modalTaskTitle').text(title);
             $('#modalTaskDesc').text(desc || 'No description available.');
+        });
+
+        // Visual feedback on status change
+        $('.status-form select').on('change', function() {
+            const $select = $(this);
+            $select.removeClass('status-pending status-in_progress status-completed')
+                .addClass('status-' + $select.val());
         });
     </script>
 </body>

@@ -55,14 +55,13 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         $request->validate([
-            'title' => 'required|max:255',
-            'status' => 'required'
+            'status' => 'required|in:pending,in_progress,completed',
         ]);
-        
-        $task->update($request->all());
-        
-        return redirect()->route('tasks.index')
-            ->with('success', 'Task updated!');
+
+        $task->status = $request->status;
+        $task->save();
+
+        return redirect('/tasks')->with('success', 'Task updated!');
     }
 
     // Delete task
