@@ -32,17 +32,16 @@
             <table id="taskTable" class="table table-hover mb-0 task-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Title</th>
                         <th>Description</th>
                         <th width="160">Status</th>
+                        <th width="140">Last Updated</th>
                         <th width="180">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($tasks as $task)
                     <tr>
-                        <td>{{ $task->id }}</td>
                         <td><strong>{{ $task->title }}</strong></td>
                         <td>
                             @if(strlen($task->description ?? '') > 25)
@@ -72,6 +71,11 @@
                                     <option value="completed" {{ $task->status == 'completed' ? 'selected' : '' }}>Completed</option>
                                 </select>
                             </form>
+                        </td>
+                        <td>
+                            <small class="text-muted">
+                                {{ $task->updated_at->diffForHumans() }}
+                            </small>
                         </td>
                         <td>
                             <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-outline-primary me-1">Edit</a>

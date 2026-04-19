@@ -1,14 +1,14 @@
 $(document).ready(function() {
 
-    // Initialize DataTable - Sort by ID DESC (Latest first)
+    // Initialize DataTable
     $('#taskTable').DataTable({
-        pageLength: 10,
+        paging: true,
         ordering: true,
+        searching: true,
         responsive: true,
-        order: [[0, 'desc']],           // Sort by ID column descending
-        columnDefs: [
-            { targets: 0, visible: false }   // Hide ID column
-        ],
+        lengthChange: true,
+        order: [[3, 'desc']],
+        lengthMenu: [[5, 10, 25, 50], [5, 10, 25, 50]],
         language: {
             search: "Search tasks:",
             lengthMenu: "Show _MENU_ tasks"
@@ -34,7 +34,7 @@ $(document).ready(function() {
         $('#modalTaskDesc').text(desc || 'No description available.');
     });
 
-    // Visual feedback when status changes
+    // Visual feedback on status change
     $('.status-form select').on('change', function() {
         const $select = $(this);
         $select.removeClass('status-pending status-in_progress status-completed')
