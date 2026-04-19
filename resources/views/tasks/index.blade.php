@@ -19,6 +19,7 @@
         <thead>
             <tr>
                 <th>Title</th>
+                <th>Description</th>
                 <th>Status</th>
                 <th width="200">Action</th>
             </tr>
@@ -27,6 +28,7 @@
             @foreach($tasks as $task)
                 <tr>
                     <td>{{ $task->title }}</td>
+                    <td>{{ $task->description ?? '-' }}</td>
                     <td>
                         @if($task->status == 'pending')
                             <span class="badge bg-secondary">Pending</span>

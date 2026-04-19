@@ -9,13 +9,23 @@
 <div class="container mt-5">
     <h2>Edit Task</h2>
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('tasks.update', $task->id) }}" method="POST">
         @csrf
         @method('PUT')
 
         <div class="mb-3">
             <label>Title</label>
-            <input type="text" name="title" value="{{ $task->title }}" class="form-control">
+            <input type="text" name="title" value="{{ old('title', $task->title) }}" class="form-control">
         </div>
 
         <div class="mb-3">

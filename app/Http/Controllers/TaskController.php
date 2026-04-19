@@ -10,7 +10,10 @@ class TaskController extends Controller
     // Show all tasks
     public function index()
     {
-        $tasks = Task::latest()->get();
+        $tasks = Task::when(request('status'), function ($q) {
+            $q->where('status', request('status'));
+        })->latest()->get();
+
         return view('tasks.index', compact('tasks'));
     }
 
