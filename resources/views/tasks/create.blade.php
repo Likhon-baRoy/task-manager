@@ -8,8 +8,11 @@
         <div class="col-lg-8 col-xl-6">
             
             <div class="card">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h4 class="mb-0">Create New Task</h4>
+                    <a href="{{ route('tasks.index') }}" class="btn btn-light btn-sm">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
                 </div>
                 <div class="card-body">
 
@@ -69,8 +72,8 @@
                             </button>
                             
                             <a href="{{ route('tasks.index') }}" 
-                               class="btn btn-secondary px-4">
-                                Cancel
+                               class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-x-lg"></i> Cancel
                             </a>
                         </div>
                     </form>
