@@ -5,6 +5,7 @@
     <title>Task Manager</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -20,6 +21,18 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
         @endif
+
+        <!-- Status Filter -->
+        <div class="mb-3">
+            <form method="GET" id="filterForm">
+                <select name="status" id="statusFilter" style="width: 180px;">
+                    <option value="">All Status</option>
+                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                    <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                </select>
+            </form>
+        </div>
 
         <div class="card">
             <div class="card-body p-3">
@@ -101,6 +114,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
         // Initialize DataTable
         $('#taskTable').DataTable({
@@ -111,6 +125,15 @@
                 search: "Search tasks:",
                 lengthMenu: "Show _MENU_ tasks"
             }
+        });
+
+        // Status Filter with Select2
+        $('#statusFilter').select2({
+            placeholder: "Filter by status",
+            allowClear: true,
+            minimumResultsForSearch: Infinity
+        }).on('change', function() {
+            $('#filterForm').submit();
         });
 
         // Description Modal
