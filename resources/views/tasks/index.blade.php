@@ -14,6 +14,19 @@
             --completed: #198754;
         }
 
+        .task-table thead th {
+            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+            color: white;
+            font-weight: 600;
+            padding: 14px 12px;
+            border: none;
+        }
+
+        .task-table th,
+        .task-table td {
+            vertical-align: middle;
+        }
+
         .status-select {
             border-radius: 20px;
             font-weight: 500;
